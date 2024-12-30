@@ -48,12 +48,8 @@ describe("Home", () => {
       </TicketMasterContext.Provider>,
     );
 
-    expect(screen.getByText("Welcome to the Home Page")).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "This is the home page of the Ticketmaster application.",
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Welcome to TicketMaster")).toBeInTheDocument();
+    expect(screen.getByText("Search for awesome events")).toBeInTheDocument();
   });
 
   it("should call useState twice when searchEvents and searchTerms are in context", () => {

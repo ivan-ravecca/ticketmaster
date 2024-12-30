@@ -1,7 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
+import {
+  Typography,
+  Button,
+  Box,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
 import { useContext } from "react";
-import fetchEvent from "../../services/FetchEvent";
 import { useQuery } from "@tanstack/react-query";
+import fetchEvent from "../../services/FetchEvent";
 import EventLocation from "../../components/eventLocation/EventLocation";
 import EventClassification from "../../components/eventClassification/EventClassification";
 import EventDates from "../../components/evenDates/EventDates";
@@ -19,32 +26,42 @@ const EventDetails = () => {
   const navigate = useNavigate();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   } else if (isError) {
-    return <div>Error: {error}</div>;
+    return <Alert severity="error">Error: {error}</Alert>;
   }
 
   return (
-    <>
+    <Box className="event-details" sx={{ padding: 2 }}>
       {data ? (
-        <div className="event-details">
-          <h2>{data.name}</h2>
+        <>
+          <Typography variant="h4" component="h2" gutterBottom>
+            {data.name}
+          </Typography>
           <EventLocation event={data._embedded.venues[0]} />
           <EventClassification classification={data.classifications} />
           <EventDates event={data.dates} />
-          <p>{data.info}</p>
+          <Typography variant="body1" paragraph>
+            {data.info}
+          </Typography>
           <EventImages images={data.images} />
-        </div>
+        </>
       ) : (
-        <i>No event details available</i>
+        <Typography variant="body2" color="textSecondary">
+          No event details available
+        </Typography>
       )}
 
       {ticketMasterContext && ticketMasterContext.searchedEvents ? (
-        <button onClick={() => navigate("/")}>Go back to search</button>
-      ) : (
-        ""
-      )}
-    </>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/")}
+        >
+          Go back to search
+        </Button>
+      ) : null}
+    </Box>
   );
 };
 

@@ -16,7 +16,7 @@ async function searchEvents(params) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    return data._embedded.events || [];
+    return data?._embedded?.events || [];
   } catch (error) {
     console.error("Error fetching events:", error);
     return [];

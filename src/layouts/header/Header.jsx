@@ -1,6 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import { useContext } from "react";
 import TicketMasterContext from "/src/state/TicketMasterContext";
+import "./Header.css";
 
 const Header = () => {
   const location = useLocation();
@@ -20,18 +22,30 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <Link
-        to="/"
-        className={`header-link ${isActive("/")}`}
-        onClick={handleHomeClick}
-      >
-        <h1>Home</h1>
-      </Link>
-      <Link to="/my-events" className={`header-link ${isActive("/my-events")}`}>
-        <h1>My Events</h1>
-      </Link>
-    </header>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: "transparent", boxShadow: "none" }}
+    >
+      <Toolbar>
+        <Button
+          component={RouterLink}
+          to="/"
+          color="inherit"
+          className={`header-link ${isActive("/")}`}
+          onClick={handleHomeClick}
+        >
+          Home
+        </Button>
+        <Button
+          component={RouterLink}
+          to="/my-events"
+          color="inherit"
+          className={`header-link ${isActive("/my-events")}`}
+        >
+          My Events
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 

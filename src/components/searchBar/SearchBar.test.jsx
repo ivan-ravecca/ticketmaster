@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 describe("SearchBar Component", () => {
   it("should render the SearchBar component", () => {
     render(<SearchBar onSearch={() => {}} />);
-    const inputElement = screen.getByPlaceholderText("Search for events");
+    const inputElement = screen.getByTestId("searchBox");
     expect(inputElement).toBeInTheDocument();
   });
 
@@ -13,7 +13,9 @@ describe("SearchBar Component", () => {
     const mockOnSearch = vi.fn();
     render(<SearchBar onSearch={mockOnSearch} waitingTime={500} />);
 
-    const inputElement = screen.getByPlaceholderText("Search for events");
+    const inputElement = screen
+      .getByTestId("searchBox")
+      .getElementsByTagName("input")[0];
     fireEvent.change(inputElement, { target: { value: "test query" } });
 
     // Wait for the debounce time
@@ -24,7 +26,9 @@ describe("SearchBar Component", () => {
 
   it("should update the query state when input changes", () => {
     render(<SearchBar onSearch={() => {}} />);
-    const inputElement = screen.getByPlaceholderText("Search for events");
+    const inputElement = screen
+      .getByTestId("searchBox")
+      .getElementsByTagName("input")[0];
 
     fireEvent.change(inputElement, { target: { value: "new query" } });
     expect(inputElement.value).toBe("new query");
@@ -34,7 +38,9 @@ describe("SearchBar Component", () => {
     const mockOnSearch = vi.fn();
     render(<SearchBar onSearch={mockOnSearch} waitingTime={500} />);
 
-    const inputElement = screen.getByPlaceholderText("Search for events");
+    const inputElement = screen
+      .getByTestId("searchBox")
+      .getElementsByTagName("input")[0];
     fireEvent.change(inputElement, { target: { value: "" } });
 
     // Wait for the debounce time
@@ -45,7 +51,9 @@ describe("SearchBar Component", () => {
 
   it("should use the initial searchTerm if provided", () => {
     render(<SearchBar onSearch={() => {}} searchTerm="initial query" />);
-    const inputElement = screen.getByPlaceholderText("Search for events");
+    const inputElement = screen
+      .getByTestId("searchBox")
+      .getElementsByTagName("input")[0];
     expect(inputElement.value).toBe("initial query");
   });
 });

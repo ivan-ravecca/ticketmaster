@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, ListItem, ListItemText } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
-const Event = ({ event }) => {
+const Event = ({ event, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
   const renderInfo = () => {
     if (!event.info) {
-      return <p>No information available</p>;
+      return <span>No information available</span>;
     } else if (event.info.length <= 200) {
-      return <p>{event.info}</p>;
+      return event.info;
     }
 
     return (
-      <p>
+      <>
         {isExpanded ? event.info : `${event.info.substring(0, 200)}...`}{" "}
         <span
           onClick={toggleExpand}
@@ -21,19 +22,44 @@ const Event = ({ event }) => {
         >
           {isExpanded ? "Show less" : "Show more"}
         </span>
-      </p>
+      </>
     );
   };
 
   return (
     <div className="event">
-      <h3>
-        <Link to={`/event/${event.id}`} style={{ textDecoration: "none" }}>
-          {event.name}
-        </Link>
-      </h3>
-      <p>{event.dates.start.localDate}</p>
-      {renderInfo()}
+      <ListItem key={index} alignItems="flex-start">
+        <ListItemText
+          primary={
+            <>
+              <Link
+                component={RouterLink}
+                to={`/event/${event.id}`}
+                style={{ textDecoration: "none" }}
+              >
+                {event.name}
+              </Link>
+            </>
+          }
+          secondary={
+            <>
+              On {event.dates.start.localDate}
+              <br />
+              {renderInfo()}
+            </>
+          }
+          slotProps={{
+            primary: {
+              variant: "body1",
+              color: "textPrimary",
+            },
+            secondary: {
+              variant: "body2",
+              color: "textSecondary",
+            },
+          }}
+        />{" "}
+      </ListItem>
     </div>
   );
 };

@@ -1,0 +1,37 @@
+/* .header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.header-link {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.header-link:hover {
+  background-color: #555;
+}
+
+.header-link h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header-link.active {
+    background-color: #555;
+    font-weight: bold;
+} */
+
+.header-link {
+  text-transform: none;
+}
+
+.header-link.active {
+  font-weight: bold;
+  border-bottom: 2px solid white;
+}

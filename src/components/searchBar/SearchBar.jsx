@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { TextField } from "@mui/material";
 
 const SearchBar = ({ onSearch: onSearchProp, waitingTime, searchTerm }) => {
   waitingTime = waitingTime || 700;
@@ -26,11 +27,14 @@ const SearchBar = ({ onSearch: onSearchProp, waitingTime, searchTerm }) => {
   }, [debouncedQuery, onSearch]);
 
   return (
-    <input
-      type="text"
+    <TextField
+      label="Write any event name"
+      type="search"
+      variant="filled"
       value={query}
       onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search for events"
+      fullWidth={true}
+      data-testid="searchBox"
     />
   );
 };

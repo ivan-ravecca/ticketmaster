@@ -21,7 +21,11 @@ As a developer, I am being evaluated through this project to check my technical 
 
 ## Running the Project
 
-1. Update .env file with valid API key
+1. Create .env file with valid API key
+
+   ```sh
+   VITE_API_KEY={placeholder}
+   ```
 
 2. Start the development server:
    ```sh

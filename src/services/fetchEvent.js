@@ -1,3 +1,5 @@
+const apiKey = import.meta.env.VITE_API_KEY;
+
 async function fetchEvent({ queryKey }) {
   const eventId = queryKey[1];
   console.log(`fetchEvent(${eventId})`, eventId);
@@ -5,7 +7,7 @@ async function fetchEvent({ queryKey }) {
     `https://app.ticketmaster.com/discovery/v2/events/${eventId}.json`,
   );
 
-  url.searchParams.append("apikey", "tyfA0IA7Dsdisa5tZa7AKffmcrVTkZy2");
+  url.searchParams.append("apikey", apiKey);
 
   try {
     const response = await fetch(url);

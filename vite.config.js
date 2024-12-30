@@ -23,5 +23,9 @@ export default defineConfig({
     compilerOptions: {
       types: ["vitest/globals"],
     },
+    coverage: {
+      reporter: ["text", "json", "html"],
+    },
+    reportsDirectory: "./coverage",
   },
 });

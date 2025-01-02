@@ -1,7 +1,5 @@
 import { useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
-
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -10,22 +8,41 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import fetchEvent from "../../services/FetchEvent";
 import EventLocation from "../../components/eventLocation/EventLocation";
 import EventClassification from "../../components/eventClassification/EventClassification";
-import EventDates from "../../components/evenDates/EventDates";
+import EventDates from "../../components/eventDates/EventDates";
 import EventImages from "../../components/eventImages/EventImages";
 import TicketMasterContext from "../../state/TicketMasterContext";
+import FavEvent from "../favEvent/FavEvent";
+import favEventsHelper from "../../services/favEventsHelper";
 
 const EventDetails = () => {
   const { id } = useParams();
-  const { isPending, isError, data, error } = useQuery({
+  const {
+    isPending,
+    isError,
+    data: event,
+    error,
+  } = useQuery({
     queryKey: ["event", id],
     queryFn: fetchEvent,
   });
 
-  const [ticketMasterContext] = useContext(TicketMasterContext);
+  const { data: storedEvent } = useQuery({
+    queryKey: [id],
+    queryFn: favEventsHelper.getEventById,
+  });
+
   const navigate = useNavigate();
+  const [ticketMasterContext] = useContext(TicketMasterContext);
+  const queryClient = useQueryClient();
+
+  const handleAddToFavorites = (id, notes, event) => {
+    queryClient.invalidateQueries(["favEvents"]);
+    favEventsHelper.updateFavEvent(id, notes, event);
+  };
 
   if (isPending) {
     return <CircularProgress />;
@@ -34,27 +51,33 @@ const EventDetails = () => {
   }
 
   return (
-    <Box className="event-details" sx={{ padding: 2 }}>
-      {data ? (
+    <Box className="event-details" sx={{ padding: 2, position: "relative" }}>
+      {event ? (
         <>
+          <FavEvent
+            isFavved={storedEvent || false}
+            handleAddToFavorites={handleAddToFavorites}
+            event={event}
+            notes={storedEvent?.notes || ""}
+          ></FavEvent>
           <Typography variant="h4" component="h2" gutterBottom>
-            {data.name}
+            {event.name}
           </Typography>
           <Stack direction="row" spacing={2}>
             <Box sx={{ flex: 1 }}>
-              <EventLocation event={data._embedded.venues[0]} />
+              <EventLocation event={event._embedded?.venues[0]} />
             </Box>
             <Box sx={{ flex: 1 }}>
-              <EventClassification classification={data.classifications} />
+              <EventClassification classification={event.classifications} />
             </Box>
             <Box sx={{ flex: 1 }}>
-              <EventDates event={data.dates} />
+              <EventDates event={event.dates} />
             </Box>
           </Stack>
-          <Typography variant="body1" paragraph>
-            {data.info}
+          <Typography variant="body1" component="p">
+            {event.info}
           </Typography>
-          <EventImages images={data.images} />
+          <EventImages images={event.images} />
         </>
       ) : (
         <Typography variant="body2" color="textSecondary">

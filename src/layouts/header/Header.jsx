@@ -24,7 +24,10 @@ const Header = () => {
   return (
     <AppBar
       position="static"
-      sx={{ backgroundColor: "transparent", boxShadow: "none" }}
+      sx={{
+        backgroundColor: "color(srgb 0.1 0.46 0.82 / 0.65)",
+        boxShadow: "none",
+      }}
     >
       <Toolbar>
         <Button

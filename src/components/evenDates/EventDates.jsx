@@ -1,57 +1,41 @@
+import { Box, Typography, Stack } from "@mui/material";
+
 const EventDates = ({ event }) => {
   if (!event) {
     return (
-      <section aria-labelledby="event-dates" className="event-dates">
-        <i>No event details available</i>
-      </section>
+      <Box sx={{ padding: 2 }}>
+        <Typography variant="body2" color="textSecondary">
+          <i>No date information available</i>
+        </Typography>
+      </Box>
     );
   }
 
-  const { access, start, end, status, timezone } = event;
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZone: timezone,
-      timeZoneName: "short",
-    };
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", options);
+  const buildText = (title, text) => {
+    return text ? (
+      <Typography variant="body1" component="p">
+        <strong>{title}:</strong> <span tabIndex="0">{text}</span>
+      </Typography>
+    ) : null;
   };
 
-  const buildText = (text, formattedDate) => {
-    return (
-      <p>
-        <strong>{text}:</strong>
-        <span tabIndex="0"> {formattedDate}</span>
-      </p>
-    );
-  };
+  const { start, end, timezone } = event;
 
   return (
-    <section aria-labelledby="event-dates" className="event-dates">
-      <h3 id="event-dates">Dates</h3>
-      {buildText("Date and Time", formatDate(start.dateTime))}
-      {buildText(
-        "Access Start Time",
-        access ? formatDate(access.startDateTime) : "TBD",
-      )}
-
-      {end && (end.approximate || !end.noSpecificTime)
-        ? buildText(
-            "Approximate End Time",
-            end.approximate ? "Approximate" : "To be announced",
-          )
-        : null}
-      {buildText(
-        "Status",
-        status.code.charAt(0).toUpperCase() + status.code.slice(1),
-      )}
-    </section>
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h6" id="event-dates" gutterBottom>
+        Event Dates
+      </Typography>
+      <Stack direction="column" spacing={4}>
+        <Box>
+          {buildText("Start Date", start?.localDate)}
+          {buildText("Start Time", start?.localTime)}
+          {buildText("End Date", end?.localDate)}
+          {buildText("End Time", end?.localTime)}
+          {buildText("Timezone", timezone)}
+        </Box>
+      </Stack>
+    </Box>
   );
 };
 

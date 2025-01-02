@@ -28,7 +28,8 @@ function App() {
     <>
       <CssBaseline />
       <Container maxWidth="lg" align="center">
-        <Box sx={{ bgcolor: "#cfe8fc" }}>
+        {/* <Box sx={{ bgcolor: "#cfe8fc" }}> */}
+        <Box sx={{}}>
           <BrowserRouter>
             <QueryClientProvider client={queryClient}>
               <TicketMasterContext.Provider value={ticketMasterState}>

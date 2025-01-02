@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -5,9 +8,8 @@ import {
   Box,
   CircularProgress,
   Alert,
+  Stack,
 } from "@mui/material";
-import { useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
 import fetchEvent from "../../services/FetchEvent";
 import EventLocation from "../../components/eventLocation/EventLocation";
 import EventClassification from "../../components/eventClassification/EventClassification";
@@ -38,9 +40,17 @@ const EventDetails = () => {
           <Typography variant="h4" component="h2" gutterBottom>
             {data.name}
           </Typography>
-          <EventLocation event={data._embedded.venues[0]} />
-          <EventClassification classification={data.classifications} />
-          <EventDates event={data.dates} />
+          <Stack direction="row" spacing={2}>
+            <Box sx={{ flex: 1 }}>
+              <EventLocation event={data._embedded.venues[0]} />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <EventClassification classification={data.classifications} />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <EventDates event={data.dates} />
+            </Box>
+          </Stack>
           <Typography variant="body1" paragraph>
             {data.info}
           </Typography>

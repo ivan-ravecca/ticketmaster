@@ -1,49 +1,54 @@
-const EventInfo = ({ event }) => {
+import { Typography, Box, Stack } from "@mui/material";
+
+const EventLocation = ({ event }) => {
   if (!event) {
     return (
-      <div className="event-location">
-        <address aria-label="Event Address">
+      <Box className="event-location" sx={{ padding: 2 }}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          aria-label="Event Address"
+        >
           <i>No event information available</i>
-        </address>
-      </div>
+        </Typography>
+      </Box>
     );
   }
 
   const buildText = (title, text) => {
     return text ? (
-      <p>
-        <strong>{title}:</strong>
-        <span tabIndex="0"> {text}</span>
-      </p>
-    ) : (
-      ""
-    );
+      <Typography variant="body1" component="p">
+        <strong>{title}:</strong> <span tabIndex="0">{text}</span>
+      </Typography>
+    ) : null;
   };
 
-  const buildImage = (image) => {
+  const buildImage = (image, eventName) => {
     if (image && image.length > 0) {
       return (
         <img
-          src={event.images[0].url}
-          alt="{event.name} logo"
+          src={image[0].url}
+          alt={`${eventName} logo`}
           style={{ maxWidth: "200px", maxHeight: "100px" }}
         />
       );
     }
+    return null;
   };
-
   return (
-    <div className="event-location">
-      <h1 tabIndex="0">{event.name}</h1>
-      {buildImage(event.images)}
-      <address aria-label="Event Address">
-        {buildText("Address", event?.address?.line1)}
-        {buildText("City", event?.city?.name)}
-        {buildText("State", event?.state?.name)}
-        {buildText("Country", event?.country?.name)}
-      </address>
-    </div>
+    <Box className="event-location" sx={{ padding: 2 }}>
+      <Stack direction="column" spacing={2} alignItems="center">
+        <Box>{buildImage(event.images, event.name)}</Box>
+        <Box>
+          {buildText("Name", event.name)}
+          {buildText("Address", event?.address?.line1)}
+          {buildText("City", event?.city?.name)}
+          {buildText("State", event?.state?.name)}
+          {buildText("Country", event?.country?.name)}
+        </Box>
+      </Stack>
+    </Box>
   );
 };
 
-export default EventInfo;
+export default EventLocation;

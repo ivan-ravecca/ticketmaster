@@ -4,6 +4,7 @@ import ListingSearchedEvents from "/src/features/listingSearchedEvents/ListingSe
 import searchEvents from "/src/services/searchEvents";
 import TicketMasterContext from "/src/state/TicketMasterContext";
 import Loader from "../../components/loader/Loader";
+import { Container, Typography } from "@mui/material";
 
 const Home = () => {
   const [isSearching, setIsSearching] = useState(false);
@@ -32,16 +33,21 @@ const Home = () => {
     });
     setIsSearching(false);
   };
+
   return (
-    <div>
-      <h2>Welcome to TicketMaster</h2>
-      <p>Search for awesome events</p>
+    <Container>
+      <Typography variant="h2" gutterBottom>
+        Welcome to TicketMaster
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Search for awesome events
+      </Typography>
       <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
       {!isSearching && (
         <ListingSearchedEvents events={events} searchTerm={searchTerm} />
       )}
       {isSearching && <Loader />}
-    </div>
+    </Container>
   );
 };
 

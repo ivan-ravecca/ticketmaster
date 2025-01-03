@@ -48,44 +48,43 @@ const EventDetails = () => {
     return <CircularProgress />;
   } else if (isError) {
     return <Alert severity="error">Error: {error}</Alert>;
+  } else if (!event) {
+    return (
+      <Typography variant="body2" color="textSecondary">
+        No event details available
+      </Typography>
+    );
   }
 
   return (
     <Box className="event-details" sx={{ padding: 2, position: "relative" }}>
-      {event ? (
-        <>
-          <FavEvent
-            isFavved={storedEvent || false}
-            handleAddToFavorites={handleAddToFavorites}
-            event={event}
-            notes={storedEvent?.notes || ""}
-          ></FavEvent>
-          <Typography variant="h4" component="h2" gutterBottom>
-            {event.name}
-          </Typography>
-          <Stack direction="row" spacing={2}>
-            <Box sx={{ flex: 1 }}>
-              <EventLocation event={event._embedded?.venues[0]} />
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <EventClassification classification={event.classifications} />
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <EventDates event={event.dates} />
-            </Box>
-          </Stack>
-          <Typography variant="body1" component="p">
-            {event.info}
-          </Typography>
-          <EventImages images={event.images} />
-        </>
-      ) : (
-        <Typography variant="body2" color="textSecondary">
-          No event details available
+      <>
+        <FavEvent
+          isFavved={storedEvent || false}
+          handleAddToFavorites={handleAddToFavorites}
+          event={event}
+          notes={storedEvent?.notes || ""}
+        ></FavEvent>
+        <Typography variant="h4" component="h2" gutterBottom>
+          {event.name}
         </Typography>
-      )}
-
-      {ticketMasterContext && ticketMasterContext.searchedEvents ? (
+        <Stack direction="row" spacing={2}>
+          <Box sx={{ flex: 1 }}>
+            <EventLocation event={event._embedded?.venues[0]} />
+          </Box>
+          <Box sx={{ flex: 1 }}>
+            <EventClassification classification={event.classifications} />
+          </Box>
+          <Box sx={{ flex: 1 }}>
+            <EventDates event={event.dates} />
+          </Box>
+        </Stack>
+        <Typography variant="body1" component="p">
+          {event.info}
+        </Typography>
+        <EventImages images={event.images} />
+      </>
+      {ticketMasterContext && ticketMasterContext.searchedEvents && (
         <Button
           variant="contained"
           color="primary"
@@ -93,7 +92,7 @@ const EventDetails = () => {
         >
           Go back to search
         </Button>
-      ) : null}
+      )}
     </Box>
   );
 };

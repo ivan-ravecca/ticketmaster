@@ -25,6 +25,13 @@ export default defineConfig({
     },
     coverage: {
       reporter: ["text", "json", "html"],
+      exclude: [
+        "build/assets/**",
+        "**/*.test.jsx",
+        "**/*.config.js",
+        "**/App.jsx",
+        "**/main.jsx",
+      ],
     },
     reportsDirectory: "./coverage",
   },

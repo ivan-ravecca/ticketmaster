@@ -8,7 +8,10 @@ async function searchEvents(params) {
     url.searchParams.append(key, params[key]),
   );
   url.searchParams.append("apikey", apiKey);
-  url.searchParams.append("eventdate_from", "2024-26-01T00:00:01Z");
+  url.searchParams.append(
+    "eventdate_from",
+    encodeURIComponent("2024-26-01T00:00:01Z"),
+  );
 
   try {
     const response = await fetch(url);

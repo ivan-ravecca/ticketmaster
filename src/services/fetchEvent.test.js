@@ -1,66 +1,52 @@
+import { describe, it, expect, vi } from "vitest";
 import fetchEvent from "./fetchEvent";
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+const apiKey = import.meta.env.VITE_API_KEY;
 
-describe.skip("fetchEvent", () => {
-  beforeEach(() => {
-    globalThis.fetch = vi.fn();
-  });
+describe("fetchEvent", () => {
+  const mockApiKey = apiKey;
+  const mockEventId = "test-event-id";
+  const mockUrl = `https://app.ticketmaster.com/discovery/v2/events/${mockEventId}.json?apikey=${mockApiKey}`;
 
-  afterEach(() => {
-    vi.resetAllMocks();
-  });
+  // vi.mock("fetch");
 
   it("should fetch event data successfully", async () => {
-    const mockEventId = "12345";
-    const mockResponse = {
-      ok: true,
-      json: vi.fn().mockResolvedValue({ id: mockEventId, name: "Test Event" }),
-    };
-
-    globalThis.fetch.mockResolvedValue(mockResponse);
-
-    const result = await fetchEvent({ queryKey: ["", mockEventId] });
-
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining(
-        `https://app.ticketmaster.com/discovery/v2/events/${mockEventId}.json`,
-      ),
+    const mockData = { id: mockEventId, name: "Test Event" };
+    // eslint-disable-next-line no-undef
+    global.fetch = vi.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(mockData),
+      }),
     );
-    expect(result).toEqual({ id: mockEventId, name: "Test Event" });
+
+    const result = await fetchEvent({ queryKey: ["event", mockEventId] });
+    expect(result).toEqual(mockData);
+    // eslint-disable-next-line no-undef
+    expect(global.fetch).toHaveBeenCalledWith(new URL(mockUrl));
   });
 
   it("should handle fetch error", async () => {
-    const mockEventId = "12345";
-    const mockError = new Error("HTTP error! status: 404");
-
-    globalThis.fetch.mockResolvedValue({
-      ok: false,
-      status: 404,
-    });
-
-    const result = await fetchEvent({ queryKey: ["", mockEventId] });
-
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining(
-        `https://app.ticketmaster.com/discovery/v2/events/${mockEventId}.json`,
-      ),
+    // eslint-disable-next-line no-undef
+    global.fetch = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 404,
+      }),
     );
+
+    const result = await fetchEvent({ queryKey: ["event", mockEventId] });
     expect(result).toEqual({});
+    // eslint-disable-next-line no-undef
+    expect(global.fetch).toHaveBeenCalledWith(new URL(mockUrl));
   });
 
   it("should handle network error", async () => {
-    const mockEventId = "12345";
-    const mockError = new Error("Network error");
+    // eslint-disable-next-line no-undef
+    global.fetch = vi.fn(() => Promise.reject(new Error("Network Error")));
 
-    globalThis.fetch.mockRejectedValue(mockError);
-
-    const result = await fetchEvent({ queryKey: ["", mockEventId] });
-
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining(
-        `https://app.ticketmaster.com/discovery/v2/events/${mockEventId}.json`,
-      ),
-    );
+    const result = await fetchEvent({ queryKey: ["event", mockEventId] });
     expect(result).toEqual({});
+    // eslint-disable-next-line no-undef
+    expect(global.fetch).toHaveBeenCalledWith(new URL(mockUrl));
   });
 });

@@ -2,7 +2,16 @@
 
 ## Purpose
 
-As a developer, I am being evaluated through this project to check my technical abilities.S
+As a developer, I am being evaluated through this project to check my technical abilities.
+
+### A list of good intentions
+
+- The project contains a series of different components that share information with other components.
+- Each component has its corresponding unit test to demonstrate this ability as well.
+- I am using coverage with at least 80% completion as a standard reference.
+- The final objective was to demonstrate the ability to set up a new project from scratch using tests and tools to guarantee the best quality as possible. Many aspects were covered with the quickest option rather than the most convenient one, simply to cover more in this short time.
+- The project structure does not follow any particular practice beyond a fairly common basic skeleton found within standard conventions. Some folders were created in these locations for the sake of speed when deciding.
+- The use of **indexedDB** instead of using a backend was for practical reasons. By the time I received the answer to my question on this topic, it was no longer possible for me to tackle an alternative solution. Nevertheless, I thought that my storeAPI could be a placeholder for a possible future connection with a deployed backend.
 
 ## Setup
 
@@ -74,3 +83,4 @@ I've chosen a variety of tools i feel comfortable with such as:
 - **fake-indexeddb**: For (easy) mocking indexedDB
 - **coverage-v8**: Widely used for coverage reporting
 - **@mui/material**: An opinionated component library
+- **indexedDB**: As an alternative to (locally) store the selected events.

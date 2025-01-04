@@ -9,7 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import fetchEvent from "../../services/FetchEvent";
+import fetchEvent from "../../services/fetchEvent";
 import EventLocation from "../../components/eventLocation/EventLocation";
 import EventClassification from "../../components/eventClassification/EventClassification";
 import EventDates from "../../components/eventDates/EventDates";

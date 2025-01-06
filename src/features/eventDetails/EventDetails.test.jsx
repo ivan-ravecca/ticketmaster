@@ -74,7 +74,7 @@ describe("EventDetails component", () => {
     expect(screen.getByText("Error:")).toBeInTheDocument();
   });
 
-  it("renders 'No event details available'", () => {
+  it("renders 'Oops! Page Not Found'", () => {
     useParams.mockReturnValue({ id: "1" });
     useQuery.mockReturnValue({
       data: null,
@@ -87,7 +87,7 @@ describe("EventDetails component", () => {
       searchedTerm: "",
     };
     renderWithProviders(<EventDetails />, { providerProps });
-    expect(screen.getByText("No event details available")).toBeInTheDocument();
+    expect(screen.getByText("Oops! Page Not Found")).toBeInTheDocument();
   });
 
   it("renders loading state", () => {

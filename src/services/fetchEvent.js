@@ -14,10 +14,10 @@ async function fetchEvent({ queryKey }) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    return data || {};
+    return data || null;
   } catch (error) {
     console.error("Error fetching events:", error);
-    return {};
+    return null;
   }
 }
 

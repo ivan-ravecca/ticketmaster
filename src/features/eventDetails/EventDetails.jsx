@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Typography,
@@ -7,7 +7,10 @@ import {
   CircularProgress,
   Alert,
   Stack,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckIcon from "@mui/icons-material/Check";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import fetchEvent from "../../services/fetchEvent";
 import EventLocation from "../../components/eventLocation/EventLocation";
@@ -42,7 +45,28 @@ const EventDetails = () => {
   const handleAddToFavorites = (id, notes, event) => {
     queryClient.invalidateQueries(["favEvents"]);
     favEventsHelper.updateFavEvent(id, notes, event);
+    setSnackBarOpen(true);
+    setTimeout(() => {
+      setSnackBarOpen(false);
+    }, 3000);
   };
+
+  const action = (
+    <>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={() => {
+          setSnackBarOpen(false);
+        }}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </>
+  );
+
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   if (isPending) {
     return <CircularProgress />;
@@ -92,6 +116,23 @@ const EventDetails = () => {
         >
           Go back to search
         </Button>
+      )}
+      {snackBarOpen && (
+        <Box
+          sx={{
+            padding: 2,
+            position: "absolute",
+            top: "5%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            maxWidth: "800px",
+          }}
+        >
+          <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            The favorite event has been updated
+          </Alert>
+        </Box>
       )}
     </Box>
   );

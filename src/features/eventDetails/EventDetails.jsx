@@ -18,6 +18,7 @@ import EventImages from "../../components/eventImages/EventImages";
 import TicketMasterContext from "../../state/TicketMasterContext";
 import FavEvent from "../favEvent/FavEvent";
 import favEventsHelper from "../../services/favEventsHelper";
+import NotFound from "../../layouts/notFound/NotFound";
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -56,11 +57,7 @@ const EventDetails = () => {
   } else if (isError) {
     return <Alert severity="error">Error: {error}</Alert>;
   } else if (!event) {
-    return (
-      <Typography variant="body2" color="textSecondary">
-        No event details available
-      </Typography>
-    );
+    return <NotFound></NotFound>;
   }
 
   return (

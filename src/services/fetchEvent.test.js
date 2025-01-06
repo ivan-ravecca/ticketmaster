@@ -35,7 +35,7 @@ describe("fetchEvent", () => {
     );
 
     const result = await fetchEvent({ queryKey: ["event", mockEventId] });
-    expect(result).toEqual({});
+    expect(result).toEqual(null);
     // eslint-disable-next-line no-undef
     expect(global.fetch).toHaveBeenCalledWith(new URL(mockUrl));
   });
@@ -45,7 +45,7 @@ describe("fetchEvent", () => {
     global.fetch = vi.fn(() => Promise.reject(new Error("Network Error")));
 
     const result = await fetchEvent({ queryKey: ["event", mockEventId] });
-    expect(result).toEqual({});
+    expect(result).toEqual(null);
     // eslint-disable-next-line no-undef
     expect(global.fetch).toHaveBeenCalledWith(new URL(mockUrl));
   });

@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import NotFound from "./layouts/notFound/NotFound";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +29,6 @@ function App() {
     <>
       <CssBaseline />
       <Container maxWidth="lg" align="center">
-        {/* <Box sx={{ bgcolor: "#cfe8fc" }}> */}
         <Box sx={{}}>
           <BrowserRouter>
             <QueryClientProvider client={queryClient}>
@@ -38,6 +38,7 @@ function App() {
                   <Route path="/my-events" element={<MyEvents />} />
                   <Route path="/event/:id" element={<EventDetails />} />
                   <Route path="/" element={<Home />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
               </TicketMasterContext.Provider>

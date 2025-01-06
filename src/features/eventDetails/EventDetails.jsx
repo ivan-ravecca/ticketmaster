@@ -7,9 +7,7 @@ import {
   CircularProgress,
   Alert,
   Stack,
-  IconButton,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import fetchEvent from "../../services/fetchEvent";
@@ -50,21 +48,6 @@ const EventDetails = () => {
       setSnackBarOpen(false);
     }, 3000);
   };
-
-  const action = (
-    <>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={() => {
-          setSnackBarOpen(false);
-        }}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </>
-  );
 
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 

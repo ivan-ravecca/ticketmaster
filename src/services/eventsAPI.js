@@ -55,7 +55,7 @@ export const updateEvent = async (eventId, notes, event) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return await response.json();
+    return null;
   } catch (error) {
     console.error("Failed to update event:", error);
     throw error;
@@ -70,7 +70,7 @@ export const deleteEvent = async (id) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return await response.json();
+    return null;
   } catch (error) {
     console.error("Failed to delete event:", error);
     throw error;

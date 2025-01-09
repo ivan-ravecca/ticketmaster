@@ -33,7 +33,7 @@ const EventDetails = () => {
   });
 
   const { data: storedEvent } = useQuery({
-    queryKey: [id],
+    queryKey: ["storedEvent", id],
     queryFn: favEventsHelper.getEventById,
   });
 
@@ -41,9 +41,9 @@ const EventDetails = () => {
   const [ticketMasterContext] = useContext(TicketMasterContext);
   const queryClient = useQueryClient();
 
-  const handleAddToFavorites = (id, notes, event) => {
-    queryClient.invalidateQueries(["favEvents"]);
-    favEventsHelper.updateFavEvent(id, notes, event);
+  const handleAddToFavorites = async (id, notes, event) => {
+    await favEventsHelper.updateFavEvent(id, notes, event);
+    queryClient.invalidateQueries(["favEvents", "storedEvent"]);
     setSnackBarOpen(true);
     setTimeout(() => {
       setSnackBarOpen(false);

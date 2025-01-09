@@ -42,7 +42,7 @@ const favEventsHelper = {
   },
 
   getEventById: async ({ queryKey }) => {
-    const eventId = queryKey[0];
+    const eventId = queryKey[1];
     try {
       const response = await getEventById(eventId);
       return response || null;

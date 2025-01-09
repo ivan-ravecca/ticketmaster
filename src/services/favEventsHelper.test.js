@@ -89,7 +89,7 @@ describe("favEventsHelper", () => {
       storeAPI.getEventById.mockResolvedValue(mockEvent);
 
       const event = await favEventsHelper.getEventById({
-        queryKey: [eventId],
+        queryKey: ["storedEvent", eventId],
       });
 
       expect(event).toEqual(mockEvent);
@@ -101,7 +101,7 @@ describe("favEventsHelper", () => {
       storeAPI.getEventById.mockResolvedValue(false);
 
       const event = await favEventsHelper.getEventById({
-        queryKey: [eventId],
+        queryKey: ["storedEvent", eventId],
       });
 
       expect(event).toEqual(null);
@@ -186,7 +186,7 @@ describe("favEventsHelper", () => {
       storeAPI.getEventById.mockRejectedValue(new Error(errorMessage));
 
       await expect(
-        favEventsHelper.getEventById({ queryKey: [eventId] }),
+        favEventsHelper.getEventById({ queryKey: ["storedEvent", eventId] }),
       ).rejects.toThrow(errorMessage);
       expect(storeAPI.getEventById).toHaveBeenCalledWith(eventId);
     });

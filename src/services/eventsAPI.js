@@ -1,5 +1,4 @@
-const baseUrl = "http://localhost:3000/events";
-
+const baseUrl = import.meta.env.VITE_API_URL;
 export const getAllEvents = async () => {
   try {
     const response = await fetch(baseUrl);

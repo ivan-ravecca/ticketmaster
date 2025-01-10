@@ -43,6 +43,8 @@ jobs:
       - name: Build application
         env:
           VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+          VITE_API_SQL: ${{ secrets.VITE_API_SQL }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: npm run build
       - name: Deploy to S3
         run: aws s3 sync ./build/ s3://${{ secrets.BUCKET_NAME }}

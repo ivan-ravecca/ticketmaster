@@ -1,4 +1,4 @@
-const useSQL = String(import.meta.env.VITE_API_SQL) === "true";
+const useSQL = import.meta.env.VITE_API_SQL === "true";
 import FactoryAPI from "./factoryAPI";
 
 const eventsAPI = new FactoryAPI(useSQL);

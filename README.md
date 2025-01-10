@@ -11,7 +11,8 @@ As a developer, I am being evaluated through this project to check my technical 
 - I am using coverage with at least 80% completion as a standard reference.
 - The final objective was to demonstrate the ability to set up a new project from scratch using tests and tools to guarantee the best quality as possible. Many aspects were covered with the quickest option rather than the most convenient one, simply to cover more in this short time.
 - The project structure does not follow any particular practice beyond a fairly common basic skeleton found within standard conventions. Some folders were created in these locations for the sake of speed when deciding.
-- The use of **indexedDB** instead of using a backend was for practical reasons. By the time I received the answer to my question on this topic, it was no longer possible for me to tackle an alternative solution. Nevertheless, I thought that my storeAPI could be a placeholder for a possible future connection with a deployed backend.
+- ~~The use of **indexedDB** instead of using a backend was for practical reasons. By the time I received the answer to my question on this topic, it was no longer possible for me to tackle an alternative solution. Nevertheless, I thought that my storeAPI could be a placeholder for a possible future connection with a deployed backend.~~
+- Support has been added to connect to a custom backend hosted on AWS and a PostgreSQL instance hosted on Neon. You can switch between these options using the `.env` variables.
 
 ## Setup
 
@@ -34,6 +35,8 @@ As a developer, I am being evaluated through this project to check my technical 
 
    ```sh
    VITE_API_KEY={placeholder}
+   VITE_API_SQL: {true|false}
+   VITE_API_URL: {ask for aws url | http://localhost:3000/events}
    ```
 
 2. Start the development server:

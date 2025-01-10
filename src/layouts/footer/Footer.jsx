@@ -4,6 +4,7 @@ import { Container, Typography, Box, Link, Stack } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 const useSQL = String(import.meta.env.VITE_API_SQL) === "true";
 const some = import.meta.env.VITE_API_SQL;
+const atUrl = import.meta.env.VITE_API_URL;
 const Footer = () => {
   const { ticketMasterContext, setTicketMasterContext } =
     useContext(TicketMasterContext);
@@ -58,6 +59,7 @@ const Footer = () => {
             <Typography variant="body3" color="textSecondary" sx={{ mt: 2 }}>
               {useSQL ? "I'm Using SQL at Neon" : "I'm Using local indexedDB"}
               -- {some} -- {typeof some} -- {typeof useSQL} --
+              {atUrl}
             </Typography>
           </Container>
         </Box>

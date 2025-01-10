@@ -1,15 +1,12 @@
-import {
-  getAllEvents,
-  addEvent,
-  deleteEvent,
-  updateEvent,
-  getEventById,
-} from "./storeAPI";
+const useSQL = import.meta.env.VITE_API_SQL === "true";
+import FactoryAPI from "./factoryAPI";
+
+const eventsAPI = new FactoryAPI(useSQL);
 
 const favEventsHelper = {
   addFavEvent: async (eventId, notes, event) => {
     try {
-      const response = await addEvent(eventId, notes, event);
+      const response = await eventsAPI.addEvent(eventId, notes, event);
       return response;
     } catch (error) {
       console.error("Error adding favorite event:", error);
@@ -19,9 +16,9 @@ const favEventsHelper = {
 
   updateFavEvent: async (eventId, notes, event) => {
     try {
-      const storedEvent = await getEventById(eventId);
+      const storedEvent = await eventsAPI.getEventById(eventId);
       if (storedEvent) {
-        return await updateEvent(eventId, notes, event);
+        return await eventsAPI.updateEvent(eventId, notes, event);
       } else {
         return await favEventsHelper.addFavEvent(eventId, notes, event);
       }
@@ -33,7 +30,7 @@ const favEventsHelper = {
 
   deleteFavEvent: async (eventId) => {
     try {
-      const response = await deleteEvent(eventId);
+      const response = await eventsAPI.deleteEvent(eventId);
       return response;
     } catch (error) {
       console.error("Error deleting favorite event:", error);
@@ -44,7 +41,7 @@ const favEventsHelper = {
   getEventById: async ({ queryKey }) => {
     const eventId = queryKey[1];
     try {
-      const response = await getEventById(eventId);
+      const response = await eventsAPI.getEventById(eventId);
       return response || null;
     } catch (error) {
       console.error("Error getting favorite event:", error);
@@ -54,7 +51,7 @@ const favEventsHelper = {
 
   getAllEvents: async () => {
     try {
-      const response = await getAllEvents();
+      const response = await eventsAPI.getAllEvents();
       return response || [];
     } catch (error) {
       console.error("Error getting all favorite events:", error);

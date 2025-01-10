@@ -89,7 +89,7 @@ const MyEvents = () => {
                   <>
                     <Typography
                       component={RouterLink}
-                      to={`/event/${row.id}`}
+                      to={`/event/${row.event.id}`}
                       sx={{ textDecoration: "none", color: "inherit" }}
                     >
                       {index + 1} - {row?.event?.name}
@@ -116,13 +116,13 @@ const MyEvents = () => {
               />
               <Box>
                 <IconButton
-                  onClick={() => handleDelete(row.id)}
+                  onClick={() => handleDelete(row.event.id)}
                   aria-label="delete"
                 >
                   <Delete />
                 </IconButton>
                 <IconButton
-                  onClick={() => navigate(`/event/${row.id}`)}
+                  onClick={() => navigate(`/event/${row.event.id}`)}
                   aria-label="edit"
                 >
                   <Edit />

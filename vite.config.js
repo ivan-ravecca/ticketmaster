@@ -28,6 +28,7 @@ export default defineConfig({
       exclude: [
         "build/assets/**",
         "**/*.test.jsx",
+        "**/*.test.js",
         "**/*.config.js",
         "**/App.jsx",
         "**/main.jsx",

@@ -2,6 +2,7 @@ import TicketMasterContext from "/src/state/TicketMasterContext";
 import { useContext } from "react";
 import { Container, Typography, Box, Link, Stack } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+const useSQL = import.meta.env.VITE_API_SQL === "true";
 
 const Footer = () => {
   const { ticketMasterContext, setTicketMasterContext } =
@@ -53,6 +54,9 @@ const Footer = () => {
             <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
               &copy; {new Date().getFullYear()} TicketMaster. All rights
               reserved.
+            </Typography>
+            <Typography variant="body3" color="textSecondary" sx={{ mt: 2 }}>
+              {useSQL ? "I'm Using SQL at Neon" : "I'm Using local indexedDB"}
             </Typography>
           </Container>
         </Box>

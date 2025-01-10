@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import favEventsHelper from "./favEventsHelper";
-
+vi.stubGlobal("import.meta.env", {
+  VITE_API_SQL: true,
+});
 const { storeAPI } = vi.hoisted(() => {
   return {
     storeAPI: {

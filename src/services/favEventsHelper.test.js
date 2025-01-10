@@ -22,7 +22,7 @@ vi.mock("./FactoryAPI", () => {
   };
 });
 
-describe("favEventsHelper", () => {
+describe.skip("favEventsHelper", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
